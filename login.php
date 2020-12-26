@@ -28,7 +28,7 @@
 
             <div class="form-group">
                 <label for="password">Hasło</label>
-                <input type="text" class="form-control" name="password" id="password" required>
+                <input type="password" class="form-control" name="password" id="password" required>
             </div>
 
             <button type="submit" class="btn btn-primary" name="submit">Zaloguj</button>

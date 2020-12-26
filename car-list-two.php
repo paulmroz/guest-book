@@ -17,16 +17,22 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 if (isset($_POST['submit_add'])) {
-    $date = date('Y/m/d h:i:s', time());
-    $stmt = $pdo->prepare('INSERT INTO entries(`autor`, `wpis`, `created_at`) VALUES (?, ?, ?)');
-    $stmt->execute([
-        $_POST['autor'],
-        $_POST['wpis'],
-        $date
-    ]);
+
+
+    if($_SESSION['captcha'] == $_POST['captcha']){
+
+        $date = date('Y/m/d h:i:s', time());
+        $stmt = $pdo->prepare('INSERT INTO entries(`autor`, `wpis`, `created_at`) VALUES (?, ?, ?)');
+        $stmt->execute([
+            $_POST['autor'],
+            $_POST['wpis'],
+            $date
+        ]);
+    }
 
     header('Location: index.php');
     exit();
+ 
 }
 
 if (isset($_POST['submit_edit']) && isset($_POST['id'])) {
@@ -99,6 +105,14 @@ if (isset($_POST['submit_delete']) && isset($_POST['id'])) {
                     <textarea name="wpis" id="wpis" class="form-control"></textarea>
                 </div>
 
+                
+                <img src="captcha.php" alt="Captcha image">
+
+                <div class="form-group">
+                    <label for="captcha">Przepisz kod z obrazka:</label>
+                    <input name="captcha" id="captcha" class="form-control" required>
+                </div>
+                
 
                 <button type="submit" name="submit_add" class="btn btn-primary">Dodaj</button>
             </form>
