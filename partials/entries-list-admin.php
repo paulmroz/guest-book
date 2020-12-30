@@ -70,13 +70,21 @@ if (isset($_POST['submit_delete']) && isset($_POST['id'])) {
         </div>
         <div>
         
-            <div class="form-row">
+            <div class="form">
                 <?php foreach ($rows as $row): ?>
 
-                <form method="post" role="form-control">
+                <form method="post" role="form-control" class="border border-secondary mt-1 p-3 rounded">
                     <input type="text" name="id" value="<?= $row['id'] ?>" hidden>
-                    <input type="text" class="col-10 p-1 m-1" value="<?= $row['autor'] ?>" name="autor">
-                    <input type="text" class="col-10 p-1 m-1" value="<?= $row['wpis'] ?>" name="wpis">
+                    
+                    <div class="form-group">
+                        <label for="autor">Autor:</label>
+                        <input type="text" class="form-control" name="autor" id="autor" value="<?= $row['autor'] ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="wpis">Wpis:</label>
+                        <input type="text" class="form-control" name="wpis" id="wpis" value="<?= $row['wpis'] ?>">
+                    </div>
                 
                     <div class="btn-group">
                         <button type="submit" name="submit_edit" class="btn btn-warning">Edytuj</button>

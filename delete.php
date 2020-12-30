@@ -17,18 +17,18 @@
 </head>
 
 <body>
-    <?php include __DIR__ . '/navbar.php' ?>
+    <?php include __DIR__ . '/partials/navbar.php' ?>
 
-    <div class="container h-100" style="margin-top: 10px;">
+    <div class="container" style="min-height: 1000px;">
         <?php if (isset($_SESSION['LOGGED'])): ?>
-            <?php include __DIR__ . '/cars-list.php' ?>
+            <?php include __DIR__ . '/partials/entries-list-admin.php' ?>
         <?php else: ?>
            <h1>404</h1>
         <?php endif; ?>
    
     </div>
 
-    <?php include __DIR__ . '/footer.php' ?>
+    <?php include __DIR__ . '/partials/footer.php' ?>
 
 </body>
 

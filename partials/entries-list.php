@@ -19,7 +19,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if (isset($_POST['submit_add'])) {
 
 
-    if($_SESSION['captcha'] == $_POST['captcha']){
+    if($_SESSION['captcha'] == strtoupper($_POST['captcha'])){
 
         $date = date('Y/m/d h:i:s', time());
         $stmt = $pdo->prepare('INSERT INTO entries(`autor`, `wpis`, `created_at`) VALUES (?, ?, ?)');
@@ -34,39 +34,6 @@ if (isset($_POST['submit_add'])) {
     exit();
  
 }
-
-if (isset($_POST['submit_edit']) && isset($_POST['id'])) {
-    $date = new DateTime($_POST['created_at']);
-    echo "<h1>".$_POST['created_at']."</h1>";
-    $stmt = $pdo->prepare('UPDATE entries SET autor = ?, wpis = ?, created_at = ? WHERE id = ?');
-    $stmt->execute([
-            $_POST['autor'],
-            $_POST['wpis'],
-            $date->format('Y-m-d H:i:s'),
-            $_POST['id']
-    ]);
-
-    header('Location: index.php');
-    exit();
-}
-
-if (isset($_POST['submit_delete']) && isset($_POST['id'])) {
-    $stmt = $pdo->prepare("SELECT * FROM entries WHERE id = ?");
-    $stmt->execute([$_POST['id']]);
-    $entries = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$entries) {
-        header("Location: index.php");
-        exit();
-    }
-
-    $stmt = $pdo->prepare("DELETE FROM entries WHERE id = ?");
-    $stmt->execute([$_POST['id']]);
-
-    header("Location: index.php");
-    exit();
-}
-
 ?>
 
 <div>
@@ -106,10 +73,11 @@ if (isset($_POST['submit_delete']) && isset($_POST['id'])) {
                 </div>
 
                 
-                <img src="captcha.php" alt="Captcha image">
+                <img src="../captcha.php" alt="Captcha image">
 
                 <div class="form-group">
                     <label for="captcha">Przepisz kod z obrazka:</label>
+                    <p>(wielkość liter nie ma znaczenia)</p>
                     <input name="captcha" id="captcha" class="form-control" required>
                 </div>
                 

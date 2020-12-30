@@ -6,7 +6,7 @@ create_image();
 
 function create_image(){
     $md5_hash = md5(rand(0,999));
-    $captcha = substr($md5_hash,15,6);
+    $captcha = strtoupper(substr($md5_hash,15,6));
     $_SESSION['captcha'] = $captcha;
 
     $width = 200;
@@ -19,10 +19,10 @@ function create_image(){
 
     imagefill($image, 0, 0, $black);
 
-    $font = "./font.ttf";
+    $font = "./fonts/font.ttf";
 
-    $heightValue = rand(20,29); 
-    $horizontalValue = rand(-5,15);
+    $heightValue = rand(20,25); 
+    $horizontalValue = rand(-5,10);
     $xPos = rand(1,80);
 
     $textColor = imagecolorallocate($image,rand(0,255),rand(0,255),rand(0,255));

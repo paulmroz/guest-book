@@ -33,22 +33,45 @@ create table if not exists entries
 SQL;
 
 
+
+$createAdminTableSQL = <<<SQL
+create table if not exists admins
+(
+	id int auto_increment,
+	login varchar(255) null,
+	password varchar(255) null,
+	constraint admins_pk
+		primary key (id)
+);
+SQL;
+
+
+$insertAdmin= <<<SQL
+INSERT INTO admins(login, password) VALUES ('admin','pass');
+SQL;
+
+//$2y$10$S5mK6zjgxeh60DXtdFX44eNdMLGYN99pGf.BeYnf2OqHrOZZPHaR
+
 date_default_timezone_set('Europe/Berlin');
 
 
-$dsn = sprintf(
-    "mysql:dbname=guest_book;host=localhost"
-);
 
 try {
-    $pdo = new PDO($dsn, 'paul', 'space');
-
-    if (!$pdo->query('SELECT 1 FROM entries')) {
-        $pdo->query($createTableSQL);
+    $pdo = new PDO('mysql:host=localhost;dbname=guest_book', 'paul', 'space');
+    if ($pdo->query('SELECT 1 FROM entries')) {     
     }
     $connectionSuccess = true;
 } catch (PDOException $exception) {
-    $connectionError = 'Nie udało się połączyć z bazą danych';
+    if(($exception->getCode()) == "42S02"){
+        $pdo->query($createTableSQL);
+        $pdo->query($createAdminTableSQL);
+        $pdo->query($insertAdmin);
+
+    } else {
+        $connectionError = 'Nie udało się połączyć z bazą danych';
+    }
 } catch (Exception $exception) {
+
     $connectionError = $exception->getMessage();
 }
+
