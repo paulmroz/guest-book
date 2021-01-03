@@ -1,5 +1,5 @@
 <?php
-    include __DIR__ . '/bootstrap.php';
+include __DIR__ . '/bootstrap.php';
 ?>
 
 <!doctype html>
@@ -7,8 +7,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title></title>
@@ -17,9 +16,8 @@
 </head>
 
 <body>
-    <div class="container" style="margin-top: 10px;">
-
-       
+    <?php include __DIR__ . '/partials/navbar.php' ?>
+    <div class="container mt-5 pt-5">
         <form action="save-credentials.php" method="post">
             <div class="form-group">
                 <label for="username">Login</label>
@@ -28,12 +26,12 @@
 
             <div class="form-group">
                 <label for="password">Hasło</label>
-                <input type="test" class="form-control" name="password" id="password" required>
+                <input type="password" class="form-control" name="password" id="password" required>
             </div>
 
             <button type="submit" class="btn btn-primary" name="submit">Zaloguj</button>
         </form>
-    
+
     </div>
 </body>
 

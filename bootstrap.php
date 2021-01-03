@@ -46,27 +46,28 @@ create table if not exists admins
 SQL;
 
 
-$insertAdmin= <<<SQL
-INSERT INTO admins(login, password) VALUES ('admin','pass');
+$insertAdmin = <<<SQL
+INSERT INTO admins(login, password) VALUES ('admin','\$2y\$10\$I6\.MSSs1Buv6Hc5BP5ObYueLq0OaRcus9Y\.oORp1gp41pf3hWV\.gW');
 SQL;
 
-//$2y$10$S5mK6zjgxeh60DXtdFX44eNdMLGYN99pGf.BeYnf2OqHrOZZPHaR
+//$2y$10$I6.MSSs1Buv6Hc5BP5ObYueLq0OaRcus9Y.oORp1gp41pf3hWV.gW
+
 
 date_default_timezone_set('Europe/Berlin');
 
-
+$databaseUser = 'paul';
+$databsePassword = 'space';
 
 try {
-    $pdo = new PDO('mysql:host=localhost;dbname=guest_book', 'paul', 'space');
-    if ($pdo->query('SELECT 1 FROM entries')) {     
+    $pdo = new PDO('mysql:host=localhost;dbname=guest_book', $databaseUser, $databsePassword);
+    if ($pdo->query('SELECT 1 FROM entries')) {
     }
     $connectionSuccess = true;
 } catch (PDOException $exception) {
-    if(($exception->getCode()) == "42S02"){
+    if (($exception->getCode()) == "42S02") {
         $pdo->query($createTableSQL);
         $pdo->query($createAdminTableSQL);
         $pdo->query($insertAdmin);
-
     } else {
         $connectionError = 'Nie udało się połączyć z bazą danych';
     }
@@ -74,4 +75,3 @@ try {
 
     $connectionError = $exception->getMessage();
 }
-

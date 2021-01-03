@@ -13,12 +13,14 @@ if (isset($_POST['submit'])) {
     ]);
 
     $databasePassword = $stmt->fetch(PDO::FETCH_ASSOC);
+
     
+
     if (!$databasePassword) {
-    
+
         header('Location: login.php');
     } else {
-        if(($_SESSION['DB_PASSWORD'] == $databasePassword["password"])){
+        if (password_verify($_SESSION['DB_PASSWORD'],$databasePassword["password"])) {
             $_SESSION['LOGGED'] = true;
             header('Location: delete.php');
         } else {
@@ -26,7 +28,3 @@ if (isset($_POST['submit'])) {
         }
     }
 }
-
-
-
-
